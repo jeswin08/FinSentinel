@@ -9,11 +9,11 @@ import {
   getFraudTrend,
 } from '@/services/api';
 
-export function useDashboardStats(refreshInterval: number = 5000) {
+export function useDashboardStats(refreshInterval: number = 30000) {
   const { data, error, isLoading, mutate } = useSWR(
     'dashboard-stats',
     getDashboardStats,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {
@@ -24,11 +24,11 @@ export function useDashboardStats(refreshInterval: number = 5000) {
   };
 }
 
-export function useRiskDistribution(refreshInterval: number = 10000) {
+export function useRiskDistribution(refreshInterval: number = 30000) {
   const { data, error, isLoading } = useSWR(
     'risk-distribution',
     getRiskDistribution,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {
@@ -38,11 +38,11 @@ export function useRiskDistribution(refreshInterval: number = 10000) {
   };
 }
 
-export function useFraudByHour(refreshInterval: number = 30000) {
+export function useFraudByHour(refreshInterval: number = 60000) {
   const { data, error, isLoading } = useSWR(
     'fraud-by-hour',
     getFraudByHour,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {
@@ -52,11 +52,11 @@ export function useFraudByHour(refreshInterval: number = 30000) {
   };
 }
 
-export function useTopFlaggedRules(refreshInterval: number = 30000) {
+export function useTopFlaggedRules(refreshInterval: number = 60000) {
   const { data, error, isLoading } = useSWR(
     'top-flagged-rules',
     getTopFlaggedRules,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {
@@ -66,11 +66,11 @@ export function useTopFlaggedRules(refreshInterval: number = 30000) {
   };
 }
 
-export function useFraudTrend(refreshInterval: number = 30000) {
+export function useFraudTrend(refreshInterval: number = 60000) {
   const { data, error, isLoading } = useSWR(
     'fraud-trend',
     getFraudTrend,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {

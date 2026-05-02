@@ -3,11 +3,11 @@
 import useSWR from 'swr';
 import { getSystemMetrics } from '@/services/api';
 
-export function useSystemMetrics(refreshInterval: number = 5000) {
+export function useSystemMetrics(refreshInterval: number = 30000) {
   const { data, error, isLoading, mutate } = useSWR(
     'system-metrics',
     getSystemMetrics,
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {

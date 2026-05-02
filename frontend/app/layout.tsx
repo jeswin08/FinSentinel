@@ -1,14 +1,11 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
+import { SWRConfig } from 'swr'
 import { AuthProvider } from '@/hooks/use-auth'
 import { NotificationsProvider } from '@/hooks/use-notifications'
 import { NotificationsToast } from '@/components/notifications-toast'
 import './globals.css'
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'FinSentinel - AI-Powered Fraud Detection',
@@ -47,12 +44,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <NotificationsProvider>
-              {children}
-              <NotificationsToast />
-            </NotificationsProvider>
-          </AuthProvider>
+          <SWRConfig
+            value={{
+              refreshInterval: 30000,
+              dedupingInterval: 60000,
+              revalidateOnFocus: false,
+            }}
+          >
+            <AuthProvider>
+              <NotificationsProvider>
+                {children}
+                <NotificationsToast />
+              </NotificationsProvider>
+            </AuthProvider>
+          </SWRConfig>
         </ThemeProvider>
         <Analytics />
       </body>

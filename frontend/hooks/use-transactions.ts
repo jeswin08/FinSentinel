@@ -4,11 +4,11 @@ import useSWR from 'swr';
 import { getRecentTransactions, getAllTransactions } from '@/services/api';
 import type { Transaction, RiskLevel } from '@/lib/types';
 
-export function useRecentTransactions(limit: number = 10, refreshInterval: number = 5000) {
+export function useRecentTransactions(limit: number = 10, refreshInterval: number = 30000) {
   const { data, error, isLoading, mutate } = useSWR<Transaction[]>(
     ['recent-transactions', limit],
     () => getRecentTransactions(limit),
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {
@@ -24,12 +24,12 @@ export function useAllTransactions(
   pageSize: number = 20,
   riskFilter?: RiskLevel,
   search?: string,
-  refreshInterval: number = 5000
+  refreshInterval: number = 30000
 ) {
   const { data, error, isLoading, mutate } = useSWR(
     ['all-transactions', page, pageSize, riskFilter, search],
     () => getAllTransactions(page, pageSize, riskFilter, search),
-    { refreshInterval }
+    { refreshInterval, revalidateOnFocus: false }
   );
 
   return {

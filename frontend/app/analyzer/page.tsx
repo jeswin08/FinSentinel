@@ -10,7 +10,6 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { analyzeTransaction } from '@/services/api';
 import { useNotifications } from '@/hooks/use-notifications';
-import { motion } from 'framer-motion';
 import type { TransactionFormData, TransactionAnalysis } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { AlertTriangle, CheckCircle, Shield, Loader2 } from 'lucide-react';
@@ -267,7 +266,7 @@ export default function AnalyzerPage() {
                     <div className="flex flex-wrap gap-2">
                       {result.flagged_rules.map((rule, index) => (
                         <Badge
-                          key={index}
+                          key={rule ?? index}
                           variant="outline"
                           className="border-fraud/30 bg-fraud/10 text-fraud"
                         >

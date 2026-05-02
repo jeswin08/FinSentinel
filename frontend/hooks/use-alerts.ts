@@ -5,9 +5,10 @@ import { getAlerts, getAlertStats, updateAlertStatus } from '@/services/api';
 import { useNotifications } from './use-notifications';
 import { useCallback } from 'react';
 
-export function useAlerts(refreshInterval: number = 5000) {
+export function useAlerts(refreshInterval: number = 30000) {
   const { data, error, isLoading, mutate } = useSWR('alerts', getAlerts, {
     refreshInterval,
+    revalidateOnFocus: false,
   });
   const { addNotification } = useNotifications();
 
@@ -41,9 +42,10 @@ export function useAlerts(refreshInterval: number = 5000) {
   };
 }
 
-export function useAlertStats(refreshInterval: number = 5000) {
+export function useAlertStats(refreshInterval: number = 30000) {
   const { data, error, isLoading } = useSWR('alert-stats', getAlertStats, {
     refreshInterval,
+    revalidateOnFocus: false,
   });
 
   return {

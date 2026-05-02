@@ -4,13 +4,17 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from urllib.parse import quote
 
 from dotenv import load_dotenv
+import certifi
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
 
+# Set SSL certificate environment variable for MongoDB
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 class Config:
     """Application configuration loaded from environment variables."""
@@ -21,6 +25,9 @@ class Config:
         f"sqlite:///{BASE_DIR / 'finsentinel.db'}",
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CA_BUNDLE = certifi.where()
+    MONGO_URL = f"mongodb+srv://jeswinchacko06_db_user:wxEGdiAYRX4ULfKN@finsentinel.7c1ji07.mongodb.net/?appName=FinSentinel"
+    DB_NAME = "finsentinel"
     MODEL_PATH = os.getenv("MODEL_PATH", str(BASE_DIR / "model" / "fraud_model.pkl"))
     SCALER_PATH = os.getenv("SCALER_PATH", str(BASE_DIR / "model" / "scaler.pkl"))
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")

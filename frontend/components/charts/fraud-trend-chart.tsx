@@ -1,17 +1,21 @@
-'use client';
+"use client";
 
-import { Line, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid, Area, AreaChart } from 'recharts';
+import React, { useMemo } from 'react';
+import { XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid, Area, AreaChart } from 'recharts';
 import type { FraudTrend } from '@/lib/types';
 
 interface FraudTrendChartProps {
   data: FraudTrend[];
 }
 
-export function FraudTrendChart({ data }: FraudTrendChartProps) {
-  const chartData = data.map((item) => ({
-    ...item,
-    label: new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-  }));
+export const FraudTrendChart = React.memo(function FraudTrendChart({ data }: FraudTrendChartProps) {
+  const chartData = useMemo(
+    () => data.map((item) => ({
+      ...item,
+      label: new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    })),
+    [data]
+  );
 
   return (
     <div className="h-[300px] w-full">
@@ -56,4 +60,4 @@ export function FraudTrendChart({ data }: FraudTrendChartProps) {
       </ResponsiveContainer>
     </div>
   );
-}
+});

@@ -6,7 +6,7 @@ import { StatsCard } from '@/components/stats-card';
 import { TransactionTable } from '@/components/transaction-table';
 import { RiskDistributionChart } from '@/components/charts/risk-distribution-chart';
 import { FraudByHourChart } from '@/components/charts/fraud-by-hour-chart';
-import { useDashboardStats, useRiskDistribution, useFraudByHour } from '@/hooks/use-analytics';
+import { useDashboardStats, useFraudByHour } from '@/hooks/use-analytics';
 import { useRecentTransactions } from '@/hooks/use-transactions';
 import { Activity, AlertTriangle, Shield, DollarSign, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';

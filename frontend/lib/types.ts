@@ -7,6 +7,7 @@ export interface Transaction {
   amount: number;
   currency: string;
   merchant: string;
+  category?: string;
   location: string;
   device_id: string;
   risk_score: number;
@@ -14,7 +15,7 @@ export interface Transaction {
   decision: Decision;
   flagged_rules: string[];
   timestamp: string;
-  explanation?: string;
+  explanation: string;
 }
 
 export interface DashboardStats {
@@ -25,11 +26,11 @@ export interface DashboardStats {
   risk_distribution: RiskDistribution;
   alerted_risk_distribution: RiskDistribution;
 }
-Safe: number;
+
+export interface RiskDistribution {
+  Safe: number;
   Suspicious: number;
-  Fafe: number;
-  suspicious: number;
-  fraud: number;
+  Fraud: number;
 }
 
 export interface HourlyFraud {
@@ -99,13 +100,33 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'analyst' | 'admin' | 'viewer';
+  role: 'analyst' | 'admin' | 'viewer' | 'user';
   avatar?: string;
 }
 
 export interface AuthResponse {
   token: string;
   user: User;
+}
+
+export interface UserDashboardStats {
+  user_id: string;
+  user_name: string;
+  total_transactions: number;
+  approved_transactions: number;
+  flagged_transactions: number;
+  blocked_transactions: number;
+  total_spent: number;
+  monthly_spent: number;
+  monthly_limit: number;
+  security_score: number;
+  active_devices: number;
+  last_login_location: string;
+  account_age_days: number;
+  spending_by_category: { category: string; amount: number; count: number }[];
+  recent_transactions: Transaction[];
+  monthly_spending: { month: string; amount: number }[];
+  risk_events: { date: string; type: string; description: string; resolved: boolean }[];
 }
 
 export interface NetworkNode {

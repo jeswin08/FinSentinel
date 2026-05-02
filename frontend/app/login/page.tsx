@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Loader2, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Shield, Loader2, Eye, EyeOff, AlertCircle, User, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,10 +25,25 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push('/');
+      if (email === 'user@finsentinel.com') {
+        router.push('/user-dashboard');
+      } else {
+        router.push('/');
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     }
+  };
+
+  const fillCredentials = (type: 'analyst' | 'user') => {
+    if (type === 'analyst') {
+      setEmail('demo@finsentinel.com');
+      setPassword('demo123');
+    } else {
+      setEmail('user@finsentinel.com');
+      setPassword('user123');
+    }
+    setError('');
   };
 
   return (
@@ -79,7 +95,7 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="demo@finsentinel.com"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -124,10 +140,53 @@ export default function LoginPage() {
                 )}
               </Button>
 
-              <div className="mt-4 rounded-lg border border-border/50 bg-muted/30 p-3 text-center text-xs text-muted-foreground">
-                <p className="font-medium">Demo Credentials</p>
-                <p className="mt-1">Email: demo@finsentinel.com</p>
-                <p>Password: demo123</p>
+              {/* Quick login buttons */}
+              <div className="space-y-3 pt-2">
+                <p className="text-center text-xs font-medium text-muted-foreground">Quick Login</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => fillCredentials('analyst')}
+                    className={cn(
+                      'flex flex-col items-center gap-2 rounded-xl border p-4 text-xs transition-all hover:scale-[1.02]',
+                      email === 'demo@finsentinel.com'
+                        ? 'border-primary/50 bg-primary/10 text-primary'
+                        : 'border-border/50 bg-muted/20 text-muted-foreground hover:border-primary/30 hover:bg-primary/5'
+                    )}
+                  >
+                    <div className={cn(
+                      'flex h-10 w-10 items-center justify-center rounded-lg',
+                      email === 'demo@finsentinel.com' ? 'bg-primary/20' : 'bg-muted/50'
+                    )}>
+                      <BarChart3 className="h-5 w-5" />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold">Analyst</p>
+                      <p className="text-[10px] opacity-70">Fraud monitoring</p>
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => fillCredentials('user')}
+                    className={cn(
+                      'flex flex-col items-center gap-2 rounded-xl border p-4 text-xs transition-all hover:scale-[1.02]',
+                      email === 'user@finsentinel.com'
+                        ? 'border-blue-500/50 bg-blue-500/10 text-blue-400'
+                        : 'border-border/50 bg-muted/20 text-muted-foreground hover:border-blue-500/30 hover:bg-blue-500/5'
+                    )}
+                  >
+                    <div className={cn(
+                      'flex h-10 w-10 items-center justify-center rounded-lg',
+                      email === 'user@finsentinel.com' ? 'bg-blue-500/20' : 'bg-muted/50'
+                    )}>
+                      <User className="h-5 w-5" />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold">Customer</p>
+                      <p className="text-[10px] opacity-70">Personal banking</p>
+                    </div>
+                  </button>
+                </div>
               </div>
             </form>
           </CardContent>

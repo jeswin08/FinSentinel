@@ -7,7 +7,6 @@ import { TopRulesChart } from '@/components/charts/top-rules-chart';
 import { FraudTrendChart } from '@/components/charts/fraud-trend-chart';
 import { useFraudByHour, useTopFlaggedRules, useFraudTrend } from '@/hooks/use-analytics';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertTriangle, BarChart, Clock, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 function ChartSkeleton() {
